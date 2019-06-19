@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorator="Layouts/layout">
+<head>
+    <title>Update Category</title>
+
+</head>
+<body>
+
+<div class="container" layout:fragment="content">
+    <a href="/category">
+        <button type="submit" class="btn btn-danger" th:text="#{back-home}">Back Home</button>
+    </a>
+    <form action="/upgrades" method="post" enctype="multipart/form-data">
+        <!-- Material input -->
+        <div class="md-form">
+            <i class="fas fa-user prefix"></i>
+            <input type="text" class="form-control" th:field="${categories.cate_id}">
+            <label>ID</label>
+        </div>
+        <!-- Material input -->
+        <div class="md-form">
+            <i class="fas fa-user prefix"></i>
+            <input type="text" class="form-control" th:field="${categories.cate_name}">
+<!--            <span th:if="${#fields.hasErrors('category.cate_name')}" style="color:red">Need to Input</span>-->
+            <label> Name</label>
+        </div>
+        <button type="submit" class="btn btn-danger" th:text="#{submit}">Submit</button>
+    </form>
+</div>
+</body>
+</html>

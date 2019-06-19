@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorator="Layouts/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Article</title>
+
+    <style>
+
+    </style>
+</head>
+<body>
+
+<div class="container" layout:fragment="content">
+
+    <a href="/">
+        <button type="submit" class="btn btn-danger" th:text="#{back-home}">Back Home</button>
+    </a>
+    <form th:action="add" method="post" enctype="multipart/form-data">
+        <!-- Material input -->
+        <div class="md-form">
+            <i class="fas fa-user prefix"></i>
+            <input type="text" class="form-control" th:field="${article.id}">
+            <label>ID</label>
+        </div>
+        <!-- Material input -->
+        <div class="md-form">
+            <i class="fas fa-user prefix"></i>
+            <input type="text" class="form-control" th:field="${article.title}">
+            <span th:if="${#fields.hasErrors('article.title')}" style="color:red">Need to Input</span>
+            <label> Title</label>
+        </div>
+        <div class="md-form">
+            <select th:field="${article.category.cate_id}" class="browser-default custom-select">
+                <option th:each=" category : ${categories}" th:value="${category.cate_id}"
+                        th:text="${category.cate_name}">Category
+                </option>
+            </select>
+        </div>
+        <!-- Material input -->
+        <div class="md-form">
+            <i class="fas fa-user prefix"></i>
+            <input type="text" class="form-control" th:field="${article.description}">
+            <span th:if="${#fields.hasErrors('article.description')}" style="color:red">Need to Input</span>
+            <label>Description</label>
+        </div>
+        <!-- Material input -->
+        <div class="md-form">
+            <i class="fas fa-user prefix"></i>
+            <input type="text" class="form-control" th:field="${article.author}">
+            <span th:if="${#fields.hasErrors('article.author')}" style="color:red">Need to Input</span>
+            <label>Author</label>
+        </div>
+        <input type="hidden" th:field="${article.image}">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+            </div>
+            <div class="custom-file">
+                <input type="file" name="file" class="custom-file-input" id="inputGroupFile01"
+                       aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-danger" th:text="#{submit}">Add</button>
+    </form>
+</div>
+
+</body>
+</html>

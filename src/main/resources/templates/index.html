@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorator="Layouts/layout">
+<head>
+    <title>AMS Project</title>
+
+    <style>
+        button {
+            border-radius: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div style="display: inline">
+        <a href="/add">
+            <button type="submit" class="btn btn-danger" th:text="#{add-article}"></button>
+        </a>
+        <form method="get" action="/">
+            <div class="row" style="text-align: right">
+                <div class="col-md-6">
+                    <!-- Search form -->
+                    <div class="md-form mt-0 col-md-6">
+                        <input class="form-control" th:field="${filter.title}" type="text" placeholder="Search"
+                               aria-label="Search">
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <select th:field="${filter.cate_id}" class="browser-default custom-select">
+                        <option value="">All Category</option>
+                        <option th:each=" category : ${categories}" th:value="${category.cate_id}"
+                                th:text="${category.cate_name}">Category
+                        </option>
+
+
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <table class="table table-striped">
+        <thead class="black white-text">
+        <tr>
+            <th style="text-align:center" scope="col" th:text="#{id}">ID</th>
+            <th style="text-align:center" scope="col" th:text="#{title}">Title</th>
+            <th style="text-align:center" scope="col" th:text="#{category}">Category</th>
+            <th style="text-align:center" scope="col" th:text="#{description}">Description</th>
+            <th style="text-align:center" scope="col" th:text="#{author}">Author</th>
+            <th style="text-align:center" scope="col" th:text="#{image}">Image</th>
+            <th style="text-align:center" scope="col" th:text="#{createdDate}">Created Date</th>
+            <th style="text-align:center" scope="col" th:text="#{action}"> Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="article : ${articles}" th:object="${article}">
+            <td style="text-align:center; vertical-align:middle" scope="col" th:text="*{id}"></td>
+            <td style="text-align:center; vertical-align:middle" scope="col" th:text="*{title}"></td>
+            <td style="text-align:center; vertical-align:middle" scope="col" th:text="*{category.cate_name}"></td>
+            <td style="text-align:center; vertical-align:middle" scope="col" th:text="*{description}"></td>
+            <td style="text-align:center; vertical-align:middle" scope="col" th:text="*{author}"></td>
+            <td style="text-align:center; vertical-align:middle" scope="col">
+                <img width="100px" th:src="'/images/' + *{image}"></td>
+            <td style="text-align:center; vertical-align:middle" scope="col" th:text="*{createdDate}"></td>
+            <td style="text-align:center; vertical-align:middle">
+                <ul class="list-unstyled list-inline text-center">
+
+                    <li class="list-inline-item">
+                        <a th:href="@{/detail/{id}(id=*{id})}"
+                           class="btn-floating btn-sm rgba-white-slight mx-1 primary-color">
+                            <i class="far fa-eye"></i>
+                        </a>
+                    </li>
+                    </a>
+
+                    <li class="list-inline-item">
+                        <a th:href="@{/update/{id}(id=*{id})}"
+                           class="btn-floating btn-sm rgba-white-slight mx-1 secondary-color lighten-1">
+                            <i class="fas fa-pen"></i>
+                        </a>
+                    </li>
+                    </a>
+                    <li class="list-inline-item">
+                        <a th:href="@{/delete/{id}(id=*{id})}"
+                           class="btn-floating btn-sm rgba-white-slight mx-1 danger-color">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </li>
+                    </a>
+                </ul>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+    <nav aria-label="Page navigation example dataTables_paginate paging_simple_numbers">
+        <ul class="pagination pagination-circle pg-blue justify-content-end">
+            <li class="page-item "><a class="page-link" title="First"
+                                      th:href="@{/(page=1, title=${filter.title}, cate_id=${filter.cate_id})}">First</a>
+            </li>
+            <li class="page-item ">
+                <a class="page-link" aria-label="Previous"
+                   th:href="@{/(page=${paging.previousPage}, title=${filter.title}, cate_id=${filter.cate_id})}">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item paginate_button page-item active "
+                th:each="i: ${#numbers.sequence(paging.startPage, paging.endPage)}"
+                th:class="${paging.page}==${i}? 'active'">
+                <a aria-controls="dtBasicExample" class="page-link" th:text="${i}"
+                   th:href="@{/(page=${i}, title=${filter.title}, cate_id=${filter.cate_id})}">1</a></li>
+
+            <li class="page-item">
+                <a class="page-link" aria-label="Next"
+                   th:href="@{/(page=${paging.nextPage}, title=${filter.title}, cate_id=${filter.cate_id})}">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" title="Last"
+                                     th:href="@{/(page=${paging.totalPages}, title=${filter.title}, cate_id=${filter.cate_id})}">Last</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+    });
+</script>
+</body>
+</html>

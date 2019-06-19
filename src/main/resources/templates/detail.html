@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorator="Layouts/layout">
+<head>
+    <title>View</title>
+
+</head>
+<body>
+
+<div class="container" layout:fragment="content">
+    <a href="/">
+        <button type="submit" class="btn btn-danger" th:text="#{back-home}">Back Home</button>
+    </a>
+    <div class="container">
+        <form action="/detail" method="post">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td th:text="#{id}">Mark</td>
+                    <td th:text="${article.id}">Otto</td>
+                </tr>
+                <tr>
+                    <td th:text="#{title}">Mark</td>
+                    <td th:text="${article.title}">Otto</td>
+                </tr>
+                <tr>
+                    <td th:text="#{category}">Mark</td>
+                    <td th:text="${article.category.cate_name}">Otto</td>
+                </tr>
+                <tr>
+                    <td th:text="#{description}">Mark</td>
+                    <td th:text="${article.description}">Otto</td>
+                </tr>
+                <tr>
+                    <td th:text="#{author}">Mark</td>
+                    <td th:text="${article.author}">Otto</td>
+                </tr>
+                <tr>
+                    <td th:text="#{createdDate}">Mark</td>
+                    <td th:text="${article.createdDate}">Otto</td>
+                </tr>
+                <tr>
+
+                    <!-- Card image -->
+                    <div class="view view-cascade overlay">
+                        <img class="card-img-top" th:src="'/images/' + ${article.image}" alt="Card image cap">
+                        <a>
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

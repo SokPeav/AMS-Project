@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorator="Layouts/layout">
+<head>
+    <title>Category</title>
+
+    <style>
+        button {
+            border-radius: 200px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid" layout:fragment="content">
+    <div style="display: inline">
+        <a href="/addCategory">
+            <button type="submit" class="btn btn-danger" th:text="#{add-category}"></button>
+        </a>
+
+        <table class="table table-striped">
+            <thead class="black white-text">
+            <tr>
+                <th style="text-align:center" scope="col" th:text="#{id}">ID</th>
+                <th style="text-align:center" scope="col" th:text="#{category}">CATEGORY</th>
+                <th style="text-align:center" scope="col" th:text="#{action}">ACTION</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="category : ${categories}" th:object="${category}">
+                <td style="text-align:center; vertical-align:middle" scope="col" th:text="*{cate_id}"></td>
+                <td style="text-align:center; vertical-align:middle" scope="col" th:text="*{cate_name}">
+                <td>
+                    <ul class="list-unstyled list-inline text-center">
+                        <li class="list-inline-item">
+                            <a th:href="@{/upgrade/{id}(id=${category.cate_id})}"
+                               class="btn-floating btn-sm rgba-white-slight mx-1 secondary-color lighten-1">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                        </li>
+
+                        <li class="list-inline-item">
+                            <a th:href="@{/remove/{id}(id=${category.cate_id})}"
+                               class="btn-floating btn-sm rgba-white-slight mx-1 danger-color">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </li>
+
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</body>
+</html>
