@@ -1,1 +1,0 @@
-I dont know what is wrong but i test in my pc it did know path file upload. and for i18n even i config still symble... Thank you
